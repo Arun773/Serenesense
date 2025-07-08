@@ -61,15 +61,15 @@ def detect_stress_level_audio():
     message = data.lower()
     stress_level = detect_stress(message)
     if stress_level == "high":
-        reply = "Your stress levels seem elevated. We suggest accessing a tailored Music to manage stress and induce relaxation.:<iframe style='border-radius:12px' src='https://open.spotify.com/embed/track/6FahmzZYKH0zb2f9hrVsvw?utm_source=generator&theme=0' width='100%' height='152' frameBorder='0' allowfullscreen='' allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture' loading='lazy'></iframe>"
+        reply = "Your stress levels seem elevated. Watch this standup comedy for instant relief: <a href='https://www.youtube.com/watch?v=Tqsz6fjvhZM' target='_blank'><b>Standup Comedy Video</b></a> or check out some <a href='https://www.healthline.com/nutrition/laughing-yoga' target='_blank'><b>Laughter Yoga</b></a>."
     elif stress_level == "high.":
-        reply = "Your stress levels seem elevated. We suggest accessing a tailored Music to manage stress and induce relaxation.:<iframe style='border-radius:12px' src='https://open.spotify.com/embed/album/1WTTu8JvpNLQShwwO8o4L9?utm_source=generator' width='100%' height='152' frameBorder='0' allowfullscreen='' allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture' loading='lazy'></iframe>"
+        reply = "Your stress levels seem elevated. Enjoy these memes to lighten your mood: <a href='/static/images/laughing/meme1.jpg' target='_blank'><b>Meme 1</b></a> | <a href='/static/images/laughing/meme2.jpg' target='_blank'><b>Meme 2</b></a>. Or try <a href='https://www.healthline.com/nutrition/laughing-yoga' target='_blank'><b>Laughter Yoga</b></a>."
     elif stress_level == "high..":
-        reply = "Your stress levels seem elevated. We suggest accessing a tailored Music to manage stress and induce relaxation.:<iframe style='border-radius:12px' src='https://open.spotify.com/embed/album/6w8mGg73sQl4QJEhpDUvpI?utm_source=generator' width='100%' height='152' frameBorder='0' allowfullscreen='' allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture' loading='lazy'></iframe>"    
+        reply = "Your stress levels seem elevated. Try watching this funny video: <a href='https://www.youtube.com/watch?v=Y2Oj9gllHno' target='_blank'><b>Standup Video</b></a> or browse our memes section for a quick laugh!"
     elif stress_level == "moderate":
-        reply = "Your current condition suggests a moderate level of stress. We advise considering a calming track as a potential intervention to mitigate its effects.: <iframe style='border-radius:12px' src='https://open.spotify.com/embed/album/2sBB17RXTamvj7Ncps15AK?utm_source=generator&theme=0' width='100%' height='152' frameBorder='0' allowfullscreen='' allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture' loading='lazy'></iframe>"
+        reply = "You have a moderate level of stress. Take a break and enjoy some laughter yoga: <a href='https://www.healthline.com/nutrition/laughing-yoga' target='_blank'><b>Laughter Yoga Guide</b></a> or watch a short standup: <a href='https://www.youtube.com/watch?v=XDlyS4N__3o' target='_blank'><b>Standup Clip</b></a>."
     elif stress_level == "low":
-        reply = "Your stress level seems low. Enjoy this uplifting song: <iframe style='border-radius:12px' src='https://open.spotify.com/embed/album/24OWaZVdZ7PB8omdcaz06o?utm_source=generator&theme=0' width='100%' height='152' frameBorder='0' allowfullscreen='' allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture' loading='lazy'></iframe>"
+        reply = "Your stress level seems low. Keep smiling! Enjoy a meme: <a href='/static/images/laughing/meme3.jpg' target='_blank'><b>Meme 3</b></a> or share a joke with a friend!"
     else:
         reply = "Unable to detect stress level from the provided message."
     return jsonify({'stress_level': stress_level, 'recommendation': reply})
