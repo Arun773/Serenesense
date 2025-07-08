@@ -153,7 +153,7 @@
               live chatbot service, I can help my customers more efficiently and
               quickly. This can result in better customer satisfaction and
               increased loyalty. Additionally, the live chatbot can be
-              programmed to understand the customer’s needs and provide accurate
+              programmed to understand the customer's needs and provide accurate
               answers. This can help reduce the need to transfer customers to a
               human representative and save time for both the customer and my
               team. Live chatbot services can be a great way to give my
@@ -195,38 +195,108 @@
         <!-- <button onclick="sendMessage()">Send</button> -->
         
         <script>
-            const accessToken = 'K45XY4CQSUPUUTC4VZ2OIS2TAY4QLS4A'; // Replace with your Wit.ai access token
-    
+            // Define FAQs with flexible keyword matching and detailed answers
+            const faqs = [
+                {
+                    keywords: ["hi", "hello", "hey", "good morning", "good afternoon", "good evening"],
+                    answer: "Hello! 👋 I'm here to help you with any questions about our therapies or services. How can I assist you today?"
+                },
+                {
+                    keywords: ["bye", "goodbye", "see you", "see ya", "take care"],
+                    answer: "Goodbye! 😊 Take care and remember, you can always come back for support or relaxation."
+                },
+                {
+                    keywords: ["audio therapy", "music therapy", "sound therapy"],
+                    answer: "<b>Audio Therapy:</b> We use music and sound to help reduce stress, improve your mood, and support your mental well-being. You can try our audio therapy section for relaxing tracks and guided sessions."
+                },
+                {
+                    keywords: ["yoga therapy", "yoga", "posture", "asana"],
+                    answer: "<b>Yoga Therapy:</b> Yoga therapy combines physical postures, breathing exercises, and meditation to help you relax, reduce anxiety, and improve your overall health. Explore our yoga therapy page for guided routines."
+                },
+                {
+                    keywords: ["reading therapy", "book therapy", "reading"],
+                    answer: "<b>Reading Therapy:</b> Reading therapy uses books and stories to calm your mind, inspire positive thinking, and provide a healthy escape. Visit our reading therapy section for recommended books and articles."
+                },
+                {
+                    keywords: ["child therapy", "children", "kids"],
+                    answer: "<b>Child Therapy:</b> We offer supportive resources and activities tailored for children to help them manage stress and emotions in a fun, safe way."
+                },
+                {
+                    keywords: ["spiritual therapy", "spiritual", "spirtual"],
+                    answer: "<b>Spiritual Therapy:</b> Our spiritual therapy section offers guidance, practices, and resources to nurture your inner peace and well-being."
+                },
+                {
+                    keywords: ["laugh therapy", "laughter", "laugh"],
+                    answer: "<b>Laugh Therapy:</b> Laughter is a great stress reliever! Our laugh therapy page features videos and activities to help you smile and boost your mood."
+                },
+                {
+                    keywords: ["special therapy", "chatbot", "live chat"],
+                    answer: "<b>Special Therapy:</b> This is our live chatbot service, here to answer your questions and guide you to the right therapy for your needs."
+                },
+                {
+                    keywords: ["how to use", "how do i use", "navigate", "help"],
+                    answer: "<b>How to Use:</b> Use the menu at the top to explore different therapies. Click on any therapy type to learn more and access resources. If you need help, just ask me!"
+                },
+                {
+                    keywords: ["contact", "doctor", "consult"],
+                    answer: "<b>Contact a Doctor:</b> For professional help, visit the 'Consult a Doctor' link in the Services section. We're here to support you, but a professional can provide medical advice."
+                },
+                {
+                    keywords: ["free", "cost", "price"],
+                    answer: "<b>Is this service free?</b> Yes! All therapy resources on this website are free to access."
+                },
+                {
+                    keywords: ["how do i start", "start", "begin", "get started"],
+                    answer: "<b>How to Start:</b> Just click on any therapy type in the menu to begin your journey to relaxation and well-being."
+                },
+                {
+                    keywords: ["login", "sign in", "account"],
+                    answer: "<b>Login:</b> You can log in from the login page to access personalized features and save your progress."
+                },
+                {
+                    keywords: ["what is this website", "about this website", "about", "who are you"],
+                    answer: "<b>About Us:</b> This website offers a variety of therapy resources including audio, yoga, reading, laughter, and more to help you manage stress and improve your well-being."
+                }
+            ];
+
             function sendMessage() {
                 const userInput = document.getElementById('user-input').value;
                 displayMessage(userInput, 'user');
-    
-                // Send user message to Wit.ai for processing
-                fetch(`https://api.wit.ai/message?q=${encodeURIComponent(userInput)}`, {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`
+
+                const message = userInput.toLowerCase();
+                let botResponse = null;
+
+                // Try to match user input to any FAQ
+                for (const faq of faqs) {
+                    if (faq.keywords.some(keyword => message.includes(keyword))) {
+                        botResponse = faq.answer;
+                        break;
                     }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const botResponse = data.intents.length > 0 ? data.intents[0].name : "I'm sorry, I didn't understand that.";
-                    displayMessage(botResponse, 'bot');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-    
-                // Clear input field
+                }
+
+                // Default response with suggestions
+                if (!botResponse) {
+                    botResponse = "I'm sorry, I didn't understand that. <br>" +
+                        "You can ask me things like:<ul>" +
+                        "<li>What is audio therapy?</li>" +
+                        "<li>How does yoga therapy help?</li>" +
+                        "<li>Is this service free?</li>" +
+                        "<li>How do I contact a doctor?</li>" +
+                        "<li>How do I start?</li>" +
+                        "</ul>";
+                }
+
+                displayMessage(botResponse, 'bot');
                 document.getElementById('user-input').value = '';
             }
-    
+
             function displayMessage(message, sender) {
                 const chatContainer = document.getElementById('chat-container');
                 const messageElement = document.createElement('div');
                 messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
-                messageElement.textContent = message;
+                messageElement.innerHTML = message;
                 chatContainer.appendChild(messageElement);
-    
+
                 // Scroll to bottom
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
@@ -347,7 +417,7 @@
         if (menu.classList.contains("open")) {
           menu.classList.remove("open");
           ham.innerHTML =
-            '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M904 160H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zm0 624H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zm0-312H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8z"></path></svg>';
+            '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path></svg>';
           console.log("open");
         } else {
           menu.classList.add("open");
