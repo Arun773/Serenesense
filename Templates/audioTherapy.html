@@ -36,6 +36,19 @@
   background-position: center;
   background-size: cover;
 }
+.therapy-forms {
+  display: flex;
+  gap: 2em;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.therapy-form {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  margin-bottom: 1em;
+}
   </style>
 
 <body onload="myfunction()" id="main">
@@ -145,34 +158,35 @@
       </h3>
     <h1>SHARE HERE</h1>
     <!-- Form for typing stress content -->
-    <form id="stressForm">
-        <label for="stressContent">FEEL FREE TO SHARE</label><br>
-        <textarea id="stressContent" name="stressContent" rows="2" cols="100" required></textarea><br><br>
+    <div class="therapy-forms">
+      <form id="stressForm" class="therapy-form">
+        <label for="stressContent">FEEL FREE TO SHARE (Audio)</label><br>
+        <textarea id="stressContent" name="stressContent" rows="2" cols="50" required></textarea><br><br>
         <input type="submit" value="submit">
-        <!-- <button id="speechButton">Start Speech Recognition</button> -->
-        <button id="speechButton"> <img id="micIcon" src="/static/images/mic.png" alt="Microphone" width="18px"></button>
-    </form>
+        <button id="speechButton" type="button"> <img id="micIcon" src="/static/images/mic.png" alt="Microphone" width="18px"></button>
+      </form>
+      <form id="faceForm" class="therapy-form" enctype="multipart/form-data">
+        <label for="faceImage">Or Upload a Face Image</label><br>
+        <input type="file" id="faceImage" name="faceImage" accept="image/*" required><br><br>
+        <input type="submit" value="Analyze Face">
+      </form>
+    </div>
     <div id="response"></div>
     <script>
       document.getElementById('speechButton').addEventListener('click', function() {
-          // Send request to the server to start speech-to-text processing
           fetch('/speech-to-text')
               .then(response => {
-                  if (!response.ok) {
-                      throw new Error('Network response was not ok');
-                  }
+                  if (!response.ok) throw new Error('Network response was not ok');
                   return response.text();
               })
               .then(data => {
-                  // Update the textarea with the recognized speech
                   document.getElementById('stressContent').value = data;
               })
               .catch(error => {
                   console.error('There was a problem with the fetch operation:', error);
               });
       });
-  </script>
-  
+    </script>
     <script>
       document.getElementById('stressForm').addEventListener('submit', function(event) {
           event.preventDefault();
@@ -187,8 +201,23 @@
           })
           .catch(error => console.error('Error:', error));
       });
-  </script>
-  
+    </script>
+    <script>
+      const faceForm = document.getElementById('faceForm');
+      faceForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const formData = new FormData(faceForm);
+          fetch('/detect_stress_face', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+              document.getElementById('response').innerHTML = "<p>Stress Level: " + data.stress_level + "</p><p>Recommendation: " + data.recommendation + "</p>";
+          })
+          .catch(error => console.error('Error:', error));
+      });
+    </script>
     </div>
   </header>
   <!-- Header Section Ends here -->
@@ -537,7 +566,7 @@
         </div>
         <div class="details">
           <div class="center">
-            <h3>Karma: A Yogi’s Guide</h3>
+            <h3>Karma: A Yogi's Guide</h3>
             <p>
               Let's listen to the famous audiobook by Sadhguru and Leslie Howard.<br />
             </p>

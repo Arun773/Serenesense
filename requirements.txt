@@ -1,0 +1,10 @@
+Flask
+DeepFace
+librosa
+transformers
+supabase
+Pillow
+numpy
+scipy
+torch
+requests 
