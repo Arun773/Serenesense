@@ -3,10 +3,18 @@
 Quick connectivity check to Supabase using utils/db.py
 
 Usage:
-  python scripts/check_supabase.py
+    python scripts/check_supabase.py
 
 Requires .env with SUPABASE_URL and SUPABASE_KEY
 """
+import sys
+from pathlib import Path
+
+# Ensure project root is on sys.path so 'utils' package is importable
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+
 from utils.db import supabase
 
 
