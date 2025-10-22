@@ -8,3 +8,11 @@ numpy
 scipy
 torch
 requests 
+soundfile
+tensorflow   
+torch        
+python-multipart
+numpy
+opencv-python
+pydub
+python-dotenv

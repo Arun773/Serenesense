@@ -1,0 +1,31 @@
+# OS files
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Logs and runtime
+*.log
+server.pid
+
+# Notebooks autosave
+.ipynb_checkpoints/
+
+# Large or generated artifacts
+emotion_detection.h5
+uploads/
+dataset/
+reports/
+model_output/
+
+# Node/Front-end (if any)
+node_modules/
+
+# IDE
+.vscode/
+.idea/

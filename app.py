@@ -52,4 +52,10 @@ def api_results():
     return jsonify(results.data)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import socket
+    sock = socket.socket()
+    sock.bind(('', 0))
+    port = sock.getsockname()[1]
+    sock.close()
+    print(f"Starting Serenesense on port {port}")
+    app.run(debug=True, port=port)
