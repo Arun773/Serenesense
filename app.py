@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from models.face_emotion import detect_face_emotion
 from models.voice_emotion import detect_voice_emotion
 from models.text_sentiment import detect_text_sentiment
@@ -8,7 +8,49 @@ from utils.db import store_result, fetch_results
 import os
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='Templates', static_folder='static')
+
+# ---------- Frontend routes ----------
+@app.get('/')
+def home_page():
+    return render_template('index.html')
+
+@app.get('/login')
+def login_page():
+    return render_template('login.html')
+
+@app.get('/audio')
+def audio_page():
+    return render_template('audioTherapy.html')
+
+@app.get('/reading')
+def reading_page():
+    return render_template('readingTherapy.html')
+
+@app.get('/yoga')
+def yoga_page():
+    return render_template('yogatherapy.html')
+
+@app.get('/laugh')
+def laugh_page():
+    return render_template('laughTherapy.html')
+
+@app.get('/talking')
+def talking_page():
+    return render_template('talkingTherapy.html')
+
+@app.get('/child')
+def child_page():
+    return render_template('childTherapy.html')
+
+# Note: template uses 'spirtual' spelling, preserve route for compatibility
+@app.get('/spirtual')
+def spirtual_page():
+    return render_template('spirtualTherapy.html')
+
+@app.get('/special')
+def special_page():
+    return render_template('specialTherapy.html')
 
 @app.route('/api/face-emotion', methods=['POST'])
 def api_face_emotion():
